@@ -2,9 +2,9 @@
   <div class="mt-4 container-lg">
     <div class="row pb-5">
       <div class="col-12">
-        <h1 class="text-center text-white mb-2">Le mie foto</h1>
+        <h1 class="text-center text-primary mb-2">Le mie foto</h1>
       </div>
-      <div class="col-12 col-md-6 p-3" v-for="photo in photos"  :key="photo.id" :class="photo.visible ? ' ' : 'd-none'">
+      <div class="col-12 col-md-6 p-3" v-for="photo in photos"  :key="photo.id" :class="photo.visible ? ' ' : 'd-none'" @click="setActivePhotoIndex(getIndexFromPhotoId(photo.id)), getPhotoCategories(photo.id)">
         <div  class="card px-0 ms_bg_light_dark text-white h-100" :class="photo.visible ? ' ' : 'd-none'">
           <div v-if="photo.visible">
             <img class="card-img-top" :src="photo.url" alt="Card image cap img-fluid">
@@ -14,6 +14,12 @@
                 <span class="bg-primary rounded text-white p-2 mb-3 d-inline-block"> {{photo.tag}}</span>
               </div>
               <p class="card-text">{{photo.description}}</p>
+            </div>
+            <div v-if="activePhotoIndex === getIndexFromPhotoId(photo.id)" class="pb-3">
+              <div v-if="photo.categories != null" class="w-100 text-white px-3">
+                <strong>Categorie: </strong>
+                <span class="d-inline-block me-1 text-primary" v-for="category in photo.categories" :key="category.id">#{{category.name}} </span>
+              </div>
             </div>
           </div>
         </div>
@@ -32,8 +38,8 @@ export default {
   name: 'Main',
   data() {
     return {
-      photos: []
-
+      photos: [],
+      activePhotoIndex: ACTIVE_PICTURE_INDEX,
     }
   },
   methods: {
@@ -45,7 +51,26 @@ export default {
         .catch(error => {
           console.log(error);
         });
-    }
+    },
+    getPhotoCategories(photoId){
+      axios.get(API_URL + 'class/by/picture/' + photoId)
+        .then(response => {
+          const photoCategories = response.data;
+          if (photoCategories == null) return
+
+          const index = this.getIndexFromPhotoId(photoId);
+          this.photos[index].categories = photoCategories;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    setActivePhotoIndex(index){
+      this.activePhotoIndex = index;
+    },
+    getIndexFromPhotoId(id){
+      return this.photos.findIndex(photo => photo.id === id);
+    },
   },
   mounted() {
     this.getPhotos();
@@ -55,5 +80,11 @@ export default {
 </script>
 
 <style scoped>
-
+  div.col-12.col-md-6.p-3{
+    cursor: pointer;
+    transition: 1s;
+  }
+  div.col-12.col-md-6.p-3:hover{
+    transform: scale(1.05);
+  }
 </style>

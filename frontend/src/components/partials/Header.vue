@@ -1,7 +1,7 @@
 <template>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
-            <a class="navbar-brand" href="#">Jump's Gallery</a>
+            <a class="navbar-brand text-primary" href="#">Jump's Gallery</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
