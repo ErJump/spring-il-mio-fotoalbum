@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Il mio fotoalbum</title>
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}"/>
+
+</head>
+<body th:object="${photo}">
+	<header th:replace="~{frag :: header()}"></header>
+	<div class="container-lg">
+		<div class="row">
+			<div class="col-12 mb-3">
+				<h1>Aggiungi una nuova foto</h1>
+			</div>
+			<div th:if="${errors}" class="col-12">
+				<h3 class="text-danger">Errors:</h3>
+				<ul>
+					<li th:each="error : ${errors}" th:object="${error}">
+						[[*{defaultMessage}]]
+					</li>
+				</ul>
+			</div>
+			<div class="col-12">
+				<form method="POST" th:action="@{/photo/create}" th:object="${photo}">
+					<label>Titolo</label><br>
+					<input type="text" name="name" th:field="*{title}" class="form-control mb-3">
+					<br>
+					<label>Descrizione</label><br>
+					<textarea name="description" th:field="*{description}" class="form-control mb-3"></textarea>
+					<br>
+					<label>Url</label><br>
+					<input type="text" name="url" th:field="*{url}" class="form-control mb-3">
+					<br>
+					<label>Tag</label><br>
+					<input type="text" name="tag" th:field="*{tag}" class="form-control mb-3">
+					<label>Visibilita'</label>
+					<div>
+						<input type="radio" id="visible-true" name="visible" value="1" th:field="*{visible}">
+				        <label for="visible-true">Si</label>
+				        <input type="radio" id="visible-false" name="visible" value="0" th:field="*{visible}">
+				        <label for="visible-false">No</label>					
+					</div>
+					<br>
+					<label>Categorie</label><br>
+                    <div
+                        th:each="category : ${categories}"
+                        th:object="${category}"
+                        class="mb-3"
+                    >
+                        <input 
+                            type="checkbox" 
+                            name="categories" 
+                            
+                            th:value="*{id}" 
+                            th:field="${photo.categories}">
+                        <label>[[*{name}]]</label>
+                    </div>
+					<button type="submit" class="btn btn-success">Crea</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
