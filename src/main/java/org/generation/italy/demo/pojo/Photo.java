@@ -39,7 +39,7 @@ public class Photo {
 	private String url;
 	
 	@Column
-	@NotEmpty(message = "l'immagine non può essere vuota")
+	@NotEmpty(message = "il tag non può essere vuoto")
 	private String tag;
 	
 	@Column
