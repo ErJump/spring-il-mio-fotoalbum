@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/1/categorie")
+@RequestMapping("/api/1/class")
 @CrossOrigin("*")
 public class CategoryApiController {
 	
 	@Autowired
 	private PhotoService pS;
 	
-	@GetMapping("/by/photo/{id}")
+	@GetMapping("/by/picture/{id}")
 	public List<Category> getCategoriesByPhotoId(@PathVariable("id") int id) {
 		return pS.findPhotoById(id).get().getCategories();
 	}
