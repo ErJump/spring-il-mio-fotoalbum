@@ -24,7 +24,7 @@
 			<div class="col-12">
 				<form method="POST" th:action="@{/photo/create}" th:object="${photo}">
 					<label>Titolo</label><br>
-					<input type="text" name="name" th:field="*{title}" class="form-control mb-3">
+					<input type="text" name="title" th:field="*{title}" class="form-control mb-3">
 					<br>
 					<label>Descrizione</label><br>
 					<textarea name="description" th:field="*{description}" class="form-control mb-3"></textarea>
