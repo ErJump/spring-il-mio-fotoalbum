@@ -1,8 +1,12 @@
 <template>
   <div class="mt-4 container-lg">
     <div class="row pb-5">
-      <div class="col-12">
-        <h1 class="text-center text-primary mb-2">Le mie foto</h1>
+      <div class="col-12 d-flex justify-content-between">
+        <h1 class="text-primary mb-2">Le mie foto</h1>
+        <div class="d-flex align-items-center">
+          <input type="text" class="form-control" placeholder="Cerca" v-model="searchValue">
+          <button class="btn btn-success" @click="getFilteredPhotos()">Cerca</button>
+        </div>
       </div>
       <div class="col-12 col-md-6 p-3" v-for="photo in photos"  :key="photo.id" :class="photo.visible ? ' ' : 'd-none'" @click="setActivePhotoIndex(getIndexFromPhotoId(photo.id)), getPhotoCategories(photo.id)">
         <div  class="card px-0 ms_bg_light_dark text-white h-100" :class="photo.visible ? ' ' : 'd-none'">
@@ -40,6 +44,7 @@ export default {
     return {
       photos: [],
       activePhotoIndex: ACTIVE_PICTURE_INDEX,
+      searchValue: '',
     }
   },
   methods: {
@@ -60,6 +65,17 @@ export default {
 
           const index = this.getIndexFromPhotoId(photoId);
           this.photos[index].categories = photoCategories;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    getFilteredPhotos(){
+      if(this.searchValue === '') return this.getPhotos();
+
+      axios.get(API_URL + 'pictures/search/' + this.searchValue)
+        .then(response => {
+          this.photos = response.data;
         })
         .catch(error => {
           console.log(error);
