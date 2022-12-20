@@ -13,7 +13,11 @@
 			<div class="col-12">
 				<h1>Foto</h1>
 			</div>
-			<div class="col-12 mb-2 d-flex justify-content-end">
+			<div class="col-12 mb-2 d-flex justify-content-between">
+				<form class="d-flex align-items-center">
+					<input type="text" name="query" th:value="${query}" class="form-control">
+					<input type="submit" value="Cerca" class="btn btn-primary">
+				</form>
 				<a class="btn btn-primary" href="photo/create">Aggiungi</a>
 			</div>
 			<div class="col-12">
