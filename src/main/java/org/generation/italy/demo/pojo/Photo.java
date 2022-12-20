@@ -128,9 +128,15 @@ public class Photo {
 	public List<Category> getCategories() {
 		return categories;
 	}
+	
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
 	}
+	
+	public void removeCategory(Category c) {
+		getCategories().remove(c);
+	}
+	
 	@Override
 	public String toString() {
 		return "(" + getId() + ") " + getTitle() + "\n" 

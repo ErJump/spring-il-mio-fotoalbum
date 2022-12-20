@@ -74,4 +74,15 @@ public class CategoryController {
 		return "redirect:/category";
 	}
 	
+	@GetMapping("/delete/{id}")
+	public String deleteIngredient(@PathVariable("id") int id) {
+		
+		Category c = cS.findCategoryById(id).get();
+		for (Photo photo : c.getPhotos())
+			photo.removeCategory(c);
+		
+		cS.deleteCategoryById(id);
+		return "redirect:/category";
+	}
+	
 }
