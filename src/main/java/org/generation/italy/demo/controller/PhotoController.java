@@ -76,4 +76,28 @@ public class PhotoController {
 		pS.save(photo);
 		return "redirect:/photo";
 	}
+	
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") int id, Model model) {
+		Photo photo = pS.findPhotoById(id).get();
+		
+		List<Category> categories = cS.findAll();
+		
+		model.addAttribute("categories", categories);
+		model.addAttribute("photo", photo);
+		
+		return "photo-edit";
+	}
+	
+	@PostMapping("/edit")
+	public String update(@Valid @ModelAttribute("photo") Photo photo, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		
+		if(bindingResult.hasErrors()) {
+			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+			return "redirect:/photo/edit/" + photo.getId();
+		}
+		
+		pS.save(photo);
+		return "redirect:/photo";
+	}
 }
