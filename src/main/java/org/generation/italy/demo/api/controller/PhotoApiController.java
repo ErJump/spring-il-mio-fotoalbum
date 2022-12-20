@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/1/picture")
+@RequestMapping("/api/1/pictures")
 @CrossOrigin("*")
 public class PhotoApiController {
 	
