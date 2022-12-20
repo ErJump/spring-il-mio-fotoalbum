@@ -6,12 +6,12 @@
 <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}"/>
 
 </head>
-<body>
+<body th:object="${photo}">
 	<header th:replace="~{frag :: header()}"></header>
 	<div class="container-lg">
 		<div class="row">
 			<div class="col-12 mb-3">
-				<h1>Aggiungi una nuova foto</h1>
+				<h1>Modifica [[*{title}]]</h1>
 			</div>
 			<div th:if="${errors}" class="col-12">
 				<h3 class="text-danger">Errors:</h3>
@@ -22,7 +22,8 @@
 				</ul>
 			</div>
 			<div class="col-12">
-				<form method="POST" th:action="@{/photo/create}" th:object="${photo}">
+				<form method="POST" th:action="@{/photo/edit}" th:object="${photo}">
+					<input type="number" name="id" th:field="*{id}" class="d-none">
 					<label>Titolo</label><br>
 					<input type="text" name="name" th:field="*{title}" class="form-control mb-3">
 					<br>
@@ -56,7 +57,7 @@
                             th:field="${photo.categories}">
                         <label>[[*{name}]]</label>
                     </div>
-					<button type="submit" class="btn btn-success">Crea</button>
+					<button type="submit" class="btn btn-success">Aggiorna</button>
 				</form>
 			</div>
 		</div>
