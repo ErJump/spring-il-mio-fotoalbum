@@ -32,9 +32,9 @@
 						<td th:text="*{tag}"></td>
 						<td th:text="*{visible}"></td>
 						<td>
-							<a th:href="@{show/{id}(id=${photo.id})}" class="btn btn-success">Dettagli</a>
-							<a th:href="@{edit/{id}(id=${photo.id})}" class="btn btn-primary">Modifica</a>
-							<a th:href="@{delete/{id}(id=${photo.id})}" class="btn btn-danger">Elimina</a>
+							<a th:href="@{photo/show/{id}(id=${photo.id})}" class="btn btn-success">Dettagli</a>
+							<a th:href="@{photo/edit/{id}(id=${photo.id})}" class="btn btn-primary">Modifica</a>
+							<a th:href="@{photo/delete/{id}(id=${photo.id})}" class="btn btn-danger">Elimina</a>
 						</td>
 					</tr>
 				</table>
