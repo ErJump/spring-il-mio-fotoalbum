@@ -38,10 +38,13 @@ public class PhotoService {
 	}
 	
 	@Transactional
-	public List<Photo> findAllWCategory() {
+	public List<Photo> findAllWCategoryAndComment() {
 		List<Photo> photos = pR.findAll();
-		for (Photo p : photos)
+		for (Photo p : photos) {
 			Hibernate.initialize(p.getCategories());
+			Hibernate.initialize(p.getComments());
+		}
+		
 		return photos;
 	}
 }
