@@ -24,6 +24,10 @@
 				    	Visibile: <span>[[*{visible}]]</span>
 				    </p>
 				    <p>Categorie: <span th:each="category : ${categories}" th:object="${category}">"[[*{name}]]" </span></p>
+				  	<h6 th:if="${!comments.isEmpty()}">Commenti:</h6>
+				  	<ul>
+				  		<li th:each="comment : ${comments}" th:object="${comment}">[[*{text}]]</li>
+				  	</ul>
 				  </div>
 				</div>
 			</div>
