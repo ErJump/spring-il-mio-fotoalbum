@@ -20,9 +20,17 @@
               <p class="card-text">{{photo.description}}</p>
             </div>
             <div v-if="activePhotoIndex === getIndexFromPhotoId(photo.id)" class="pb-3">
-              <div v-if="photo.categories != null" class="w-100 text-white px-3">
+              <div v-if="photo.categories != null" class="w-100 text-white px-3 mb-2">
                 <strong>Categorie: </strong>
                 <span class="d-inline-block me-1 text-primary" v-for="category in photo.categories" :key="category.id">#{{category.name}} </span>
+              </div>
+              <div v-if="photo.comments != null" class="w-100 text-white px-3">
+                <strong>Commenti: </strong>
+                <ul>
+                  <li v-for="comment in photo.comments" :key="comment.id">
+                    <span>{{comment.text}}</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -57,7 +65,7 @@ export default {
           console.log(error);
         });
     },
-    getPhotoCategories(photoId){
+    getPhotoCategories(photoId) {
       axios.get(API_URL + 'class/by/picture/' + photoId)
         .then(response => {
           const photoCategories = response.data;
@@ -65,6 +73,19 @@ export default {
 
           const index = this.getIndexFromPhotoId(photoId);
           this.photos[index].categories = photoCategories;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    getPhotoComments(photoId) {
+      axios.get(API_URL + 'comments/by/picture/' + photoId)
+        .then(response => {
+          const photoComments = response.data;
+          if (photoComments == null) return
+
+          const index = this.getIndexFromPhotoId(photoId);
+          this.photos[index].comments = photoComments;
         })
         .catch(error => {
           console.log(error);
