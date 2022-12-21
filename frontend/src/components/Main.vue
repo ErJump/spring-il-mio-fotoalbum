@@ -112,6 +112,7 @@ export default {
         });
     },
     postComment(photoId){
+      if(this.userComment.trim() === '') return;
       this.newComment.photo = photoId;
       this.newComment.text = this.userComment;
 
