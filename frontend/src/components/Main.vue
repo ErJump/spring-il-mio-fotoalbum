@@ -5,7 +5,7 @@
         <h1 class="text-primary mb-2">Le mie foto</h1>
         <div class="d-flex align-items-center">
           <input type="text" class="form-control" placeholder="Cerca" v-model="searchValue">
-          <button class="btn btn-success" @click="getFilteredPhotos()">Cerca</button>
+          <button class="btn btn-success" @click="getFilteredPhotos()"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
       </div>
       <div class="p-3 col-12" v-for="photo in photos"  :key="photo.id" 
@@ -16,21 +16,21 @@
             <img class="card-img-top img-fluid" :src="photo.url" alt="Card image cap ">
             <div class="card-body">
               <div class="d-flex justify-content-between">
-                <h5 class="card-title">{{photo.title}}</h5>
+                <h5 class="card-title text-primary">{{photo.title}}</h5>
                 <span class="bg-primary rounded text-white p-2 mb-3 d-inline-block"> {{photo.tag}}</span>
               </div>
               <p class="card-text"><strong>Descrizione: </strong> {{photo.description}}</p>
             </div>
             <div v-if="activePhotoIndex === getIndexFromPhotoId(photo.id)" class="pb-3">
-              <div v-if="photo.categories != null" class="w-100 text-white px-3 mb-2">
+              <div v-if="photo.categories != null" class="w-100 text-white px-3 mb-3">
                 <strong>Categorie: </strong>
                 <span class="d-inline-block me-1 text-primary" v-for="category in photo.categories" :key="category.id">#{{category.name}} </span>
               </div>
               <div v-if="photo.comments != null" class="w-100 text-white px-3">
-                <strong class="d-inline-block mb-2">Commenti: </strong>
+                <strong class="d-inline-block mb-2">({{getArrayLength(photo.comments)}}) Commenti:</strong>
                 <div class="d-flex align-items-center mb-2">
                   <input type="text" class="form-control" placeholder="Inserisci un commento" v-model="userComment">
-                  <button class="btn btn-success" @click="postComment(photo.id)">Invia</button>
+                  <button class="btn btn-success" @click="postComment(photo.id)"><i class="fa-solid fa-paper-plane"></i></button>
                 </div>
                 <ul>
                   <li v-for="comment in photo.comments" :key="comment.id">
@@ -132,6 +132,9 @@ export default {
     },
     isActiveIndexNotActive(){
       return this.activePhotoIndex !== ACTIVE_PICTURE_INDEX;
+    },
+    getArrayLength(array){
+      return array.length;
     }
   },
   mounted() {
@@ -152,6 +155,7 @@ export default {
 
   .ms_container{
     max-width: 600px;
+    min-height: 100vh;
     margin: auto;
     padding-left: 100px;
     overflow: hidden;
