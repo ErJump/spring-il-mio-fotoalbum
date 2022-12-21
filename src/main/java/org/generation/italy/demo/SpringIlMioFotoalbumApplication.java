@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.generation.italy.demo.pojo.Category;
+import org.generation.italy.demo.pojo.Comment;
 import org.generation.italy.demo.pojo.Photo;
 import org.generation.italy.demo.pojo.Role;
 import org.generation.italy.demo.pojo.User;
 import org.generation.italy.demo.service.CategoryService;
+import org.generation.italy.demo.service.CommentService;
 import org.generation.italy.demo.service.PhotoService;
 import org.generation.italy.demo.service.RoleService;
 import org.generation.italy.demo.service.UserService;
@@ -30,6 +32,9 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner{
 	
 	@Autowired
 	private RoleService rS;
+	
+	@Autowired
+	private CommentService coS;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringIlMioFotoalbumApplication.class, args);
@@ -72,7 +77,17 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner{
 		pS.save(p3);
 		pS.save(p4);
 		
-		//System.err.println(pS.findAllWCategory());
+		Comment co1 = new Comment("bella foto!", p1);
+		Comment co2 = new Comment("brutta foto!", p1);
+		Comment co3 = new Comment("spettacolare", p2);
+		Comment co4 = new Comment("avrei preso un soggetto migliore", p4);
+		
+		coS.save(co1);
+		coS.save(co2);
+		coS.save(co3);
+		coS.save(co4);
+		
+		System.err.println(pS.findAllWCategoryAndComment());
 		
 		Role admin = new Role("ADMIN");
 		rS.save(admin);
