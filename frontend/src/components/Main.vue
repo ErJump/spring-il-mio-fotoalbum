@@ -25,7 +25,11 @@
                 <span class="d-inline-block me-1 text-primary" v-for="category in photo.categories" :key="category.id">#{{category.name}} </span>
               </div>
               <div v-if="photo.comments != null" class="w-100 text-white px-3">
-                <strong>Commenti: </strong>
+                <strong class="d-inline-block mb-2">Commenti: </strong>
+                <div class="d-flex align-items-center mb-2">
+                  <input type="text" class="form-control" placeholder="Inserisci un commento" v-model="userComment">
+                  <button class="btn btn-success" @click="postComment(photo.id)">Invia</button>
+                </div>
                 <ul>
                   <li v-for="comment in photo.comments" :key="comment.id">
                     <span>{{comment.text}}</span>
@@ -46,6 +50,7 @@ import axios from 'axios';
 const API_URL = 'http://localhost:8080/api/1/';
 const ACTIVE_PICTURE_INDEX = -1;
 
+
 export default {
   name: 'Main',
   data() {
@@ -53,6 +58,8 @@ export default {
       photos: [],
       activePhotoIndex: ACTIVE_PICTURE_INDEX,
       searchValue: '',
+      userComment: '',
+      newComment: { text: '', photo: ''},
     }
   },
   methods: {
@@ -97,6 +104,19 @@ export default {
       axios.get(API_URL + 'pictures/search/' + this.searchValue)
         .then(response => {
           this.photos = response.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    postComment(photoId){
+      this.newComment.photo = photoId;
+      this.newComment.text = this.userComment;
+
+      axios.post(API_URL + 'comments/add/' + photoId , this.newComment)
+        .then(response => {
+          this.getPhotoComments(photoId);
+          this.userComment = '';
         })
         .catch(error => {
           console.log(error);
