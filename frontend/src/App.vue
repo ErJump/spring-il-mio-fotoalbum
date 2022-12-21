@@ -1,7 +1,7 @@
 <template>
-  <div class="ms_bg_dark">
+  <div class="ms_bg_dark d-flex ms_body">
     <Header />
-    <Main />
+    <Main class="ms_overflow"/>
   </div>
 </template>
 
@@ -25,5 +25,9 @@ export default {
 
   .ms_bg_light_dark{
     background-color: #313131;
+  }
+
+  .ms_overflow{
+    overflow-y: scroll;
   }
 </style>
